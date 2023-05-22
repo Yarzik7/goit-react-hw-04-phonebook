@@ -31,6 +31,7 @@
 
   background-color: #939393;
   border: none;
+  border-radius: 50%;
 
   cursor: pointer;
 }

@@ -7,18 +7,29 @@ import css from './App.module.css';
 
 class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
 
+  componentDidMount() {
+    const contactsFromStorage = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(contactsFromStorage);
+
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   filterInputId = nanoid();
 
-  handleChange = ({ target: { name, value } }) => this.setState({ [name]: value });
+  handleChange = ({ target: { name, value } }) =>
+    this.setState({ [name]: value });
 
   handleSubmit = contactFormStates => {
     const { name, number } = contactFormStates;
@@ -26,16 +37,14 @@ class App extends Component {
 
     this.state.contacts.some(({ name: contactName }) => contactName === name)
       ? alert(`${name} is already in contact`)
-      : this.setState(({ contacts }) => ({ contacts: [...contacts, newContact] }));
+      : this.setState(({ contacts }) => ({
+          contacts: [...contacts, newContact],
+        }));
   };
 
-  handleDeleteContact = ({
-    target: {
-      dataset: { name },
-    },
-  }) =>
+  handleDeleteContact = contactId =>
     this.setState(({ contacts }) => ({
-      contacts: contacts.filter(({ name: contactName }) => contactName !== name),
+      contacts: contacts.filter(({ id }) => contactId !== id),
     }));
 
   render() {

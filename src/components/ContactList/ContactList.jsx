@@ -13,6 +13,7 @@ const ContactList = ({ contacts, filter, handleDeleteContact }) => {
             name={name}
             number={number}
             handleDeleteContact={handleDeleteContact}
+            contactId={id}
           />
         ))}
     </ul>
