@@ -1,0 +1,21 @@
+.app {
+  padding: 20px;
+
+  color: #f69c02;
+
+  background-color: #000;
+}
+
+.appTitle {
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.title {
+  color: #f69c02;
+}
+
+.listEmpty {
+  font-size: 20px;
+  text-align: center;
+}
