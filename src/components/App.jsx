@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 import Filter from './Filter';
@@ -10,15 +10,8 @@ const App = () => {
   const [contacts, setContacts] = useLocalStorage('contacts', []);
   const [filter, setFilter] = useState('');
 
-  const handleChange = ({ target: { name, value } }) => {
-    switch (name) {
-      case 'filter':
-        setFilter(value);
-        break;
-      default: return;
-    }
-  };
-
+  const handleChangeFilter = ({ target: { value } }) => setFilter(value);
+     
   const handleSubmit = contactFormStates => {
     const { name, number } = contactFormStates;
     const newContact = { id: nanoid(), name, number };
@@ -34,16 +27,11 @@ const App = () => {
     <div className={css.app}>
       <h1 className={css.appTitle}>Phonebook</h1>
 
-      <ContactForm
-        handleSubmit={handleSubmit}
-      />
+      <ContactForm handleSubmit={handleSubmit} />
 
       <h2 className={css.title}>Contacts:</h2>
 
-      <Filter
-        handleChange={handleChange}
-        filter={filter}
-      />
+      <Filter handleChangeFilter={handleChangeFilter} filter={filter} />
 
       {!contacts.length ? (
         <p className={css.listEmpty}>The contact list is empty!</p>

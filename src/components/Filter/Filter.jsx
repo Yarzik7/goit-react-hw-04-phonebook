@@ -1,24 +1,25 @@
+import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import css from './Filter.module.css'
 import { nanoid } from 'nanoid';
 
-const Filter = ({ handleChange, filter }) => {
-  const filterInputId = nanoid();
+const Filter = ({ handleChangeFilter, filter }) => {
+  const filterInputId = useRef(nanoid());
 
   return (
     <div className={css.filterBox}>
-      <label htmlFor={filterInputId} className={css.label}>
+      <label htmlFor={filterInputId.current} className={css.label}>
         Find contacts by name
       </label>
       <input
         type="tel"
         name="filter"
-        id={filterInputId}
-        pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-        title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+        id={filterInputId.current}
+        pattern="^[a-zA-Za-яА-Я]+(([' -][a-zA-Za-яА-Я ])?[a-zA-Za-яА-Я]*)*$"
+        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
         required
         className={css.input}
-        onChange={handleChange}
+        onChange={handleChangeFilter}
         value={filter}
       />
     </div>
@@ -26,7 +27,7 @@ const Filter = ({ handleChange, filter }) => {
 };
 
 Filter.propTypes = {
-  handleChange: PropTypes.func.isRequired,
+  handleChangeFilter: PropTypes.func.isRequired,
   filter: PropTypes.string.isRequired,
 };
 
