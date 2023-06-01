@@ -12,7 +12,7 @@ const Filter = ({ handleChangeFilter, filter }) => {
         Find contacts by name
       </label>
       <input
-        type="tel"
+        type="text"
         name="filter"
         id={filterInputId.current}
         pattern="^[a-zA-Za-яА-Я]+(([' -][a-zA-Za-яА-Я ])?[a-zA-Za-яА-Я]*)*$"
